@@ -1,24 +1,28 @@
-import logo from './logo.svg';
+import {Provider} from 'react-redux';
+import Create from './Components/create';
+import List from './Components/list';
+import store from './redux/store';
 import './App.css';
+import { useState } from 'react';
 
 function App() {
+  const [input, setInput] = useState({name:'', job:''});
+
+const editingItem = (id, first_name, job)=>{
+  setInput({
+    id,
+    name: first_name,
+    job
+  });
+};
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider store={store}>
+      <div className="App">
+        <Create input = {input} />
+        <List editingItem={editingItem} />
+      </div>
+    </Provider>
   );
 }
 
